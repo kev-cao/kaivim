@@ -1,0 +1,90 @@
+--- @module 'plugins.lang.lsp.go'
+--- This module configures the Go language server and related plugins for
+--- Neovim.
+
+--- @type LspSpec
+return {
+  lsp = {
+    gopls = {
+      on_attach = function(client, bufnr)
+        if not client then
+          return
+        end
+
+        local uri = vim.uri_from_bufnr(bufnr)
+        local invalid_schemes = { "octo://", "fugitive://" }
+        for _, scheme in ipairs(invalid_schemes) do
+          if vim.startswith(uri, scheme) then
+            return
+          end
+        end
+        if not client.server_capabilities.semanticTokensProvider then
+          local semantic = client.config.capabilities.textDocument.semanticTokens
+          if not semantic then
+            return
+          end
+          client.server_capabilities.semanticTokensProvider = {
+            full = true,
+            legend = { tokenModifiers = semantic.tokenModifiers, tokenTypes = semantic.tokenTypes },
+            range = true,
+          }
+        end
+      end,
+      cmd = { "gopls" },
+      filetypes = { "go", "gomod", "gowork", "gotmpl" },
+      single_file_support = true,
+      settings = {
+        gopls = {
+          buildFlags = { "-mod=mod" },
+          directoryFilters = {
+            "-**/node_modules",
+            "-**/_bazel",
+            "-**/bazel-bin",
+            "-**/bazel-out",
+            "-**/bazel-testlogs",
+            "-**/vendor",
+            "-**/inflight_trace_dump",
+            "-pkg/sql/colexec",
+          },
+          semanticTokens = true,
+          staticcheck = true,
+          hints = {
+            compositeLiteralFields = true,
+            compositeLiteralTypes = true,
+            constantValues = true,
+            functionTypeParameters = true,
+            parameterNames = true,
+            rangeVariableTypes = true,
+            ignoredError = true,
+          },
+          completeUnimported = true,
+          deepCompletion = true,
+          usePlaceholders = false,
+          diagnosticsDelay = "250ms",
+          analyses = {
+            unusedparams = true,
+            nilness = true,
+            unusedwrite = true,
+            unusedvariable = true,
+            SA4006 = true,
+          },
+        },
+      },
+    },
+  },
+  ft = {"go"},
+  linter = {
+    golangcilint = nil
+  },
+  formatter = function()
+    local gofmt = "gofmt"
+    if vim.fn.executable("crlfmt") == 1 then
+      gofmt = "crlfmt"
+    end
+    return { "goimports", gofmt }
+  end,
+  {
+    "charlespascoe/vim-go-syntax",
+    ft = { "go", "gomod", "gowork", "gotmpl" },
+  },
+}
