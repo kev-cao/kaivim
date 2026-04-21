@@ -56,35 +56,6 @@ Launch Neovim and lazy.nvim will automatically install all plugins.
 
 ## Configuration
 
-### Standalone
-
-KaiVim is initialized in `init.lua` via `require("kaivim").setup()`. Pass
-options to configure the distribution:
-
-```lua
-require("kaivim").setup({
-  ai_assistant = "claude",
-})
-```
-
-### Starter
-
-Pass options via the `opts` field on the KaiVim plugin spec in `init.lua`:
-
-```lua
-{
-  "kev-cao/kaivim",
-  import = "kaivim.plugins",
-  opts = {
-    ai_assistant = "claude",
-  },
-},
-```
-
-| Option | Type | Default | Description |
-|---|---|---|---|
-| `ai_assistant` | `"claude"\|"opencode"\|nil` | `nil` | Which AI assistant plugin to enable |
-
 ### Leader Keys
 
 | Key | Role |
@@ -123,6 +94,20 @@ return {
       style = "darker",
     },
   },
+}
+```
+
+### Enabling an AI Assistant
+
+Claude Code and OpenCode are included but disabled by default. Enable one in
+your plugin overrides:
+
+```lua
+-- lua/plugins/ai.lua
+return {
+  { "greggh/claude-code.nvim", enabled = true },
+  -- or
+  -- { "NickvanDyke/opencode.nvim", enabled = true },
 }
 ```
 

@@ -18,6 +18,8 @@ return {
       },
     },
   },
+  -- AI assistants are disabled by default because they share the same
+  -- keybindings. Enable one in your own plugin specs (e.g. lua/plugins/ai.lua).
   {
     "greggh/claude-code.nvim",
     dependencies = {
@@ -31,13 +33,7 @@ return {
         position = "vertical botright",
       }
     },
-    enabled = function()
-      local opts = vim.g.kaivim_opts or require("kaivim").config
-      return opts.ai_assistant == "claude"
-    end,
-    config = function(_, opts)
-      require("claude-code").setup(opts)
-    end
+    enabled = false,
   },
   {
     "NickvanDyke/opencode.nvim",
@@ -45,10 +41,7 @@ return {
       { "folke/snacks.nvim", opts = { input = {}, picker = {}, terminal = {} } },
     },
     keys = keymaps.opencode.keys,
-    enabled = function()
-      local opts = vim.g.kaivim_opts or require("kaivim").config
-      return opts.ai_assistant == "opencode"
-    end,
+    enabled = false,
     init = function()
       vim.o.autoread = true
     end,
