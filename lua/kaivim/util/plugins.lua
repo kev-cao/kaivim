@@ -9,37 +9,43 @@ local M = {}
 -- :h:h:h strips util/ -> kaivim/ -> lua/kaivim's parent, landing on lua/.
 local my_root = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h:h:h")
 
---- Gets all language specific specs in plugins/lang/lsp.
---- @return LspSpec[] Specs A table containing all language specific specs, containing
---- related plugins and configurations.
-function M.get_lsp_specs()
+--- Scans a directory for LspSpec lua files and appends them to the specs table.
+--- @param dir string The directory to scan.
+--- @param module_prefix string The Lua module prefix for requiring files.
+--- @param specs LspSpec[] The table to append specs to.
+--- @param skip? table<string, boolean> Module names to skip.
+local function scan_lsp_dir(dir, module_prefix, specs, skip)
   local uv = vim.loop
-  local stats = uv.fs_readdir(uv.fs_opendir(my_root .. "/kaivim/plugins/lang/lsp", nil, 1000))
+  local fd = uv.fs_opendir(dir, nil, 1000)
+  if not fd then
+    return
+  end
+  local stats = uv.fs_readdir(fd)
   if not stats then
-    return {}
+    return
   end
 
-  local specs = {}
   for _, stat in ipairs(stats) do
     if stat.type ~= "file" then
       goto continue
     end
     local module_name = stat.name:match("^(.*)%.lua$")
-    if not module_name or module_name == "lsp" then
+    if not module_name or (skip and skip[module_name]) then
       goto continue
     end
 
-    local ok, module = pcall(require, "kaivim.plugins.lang.lsp." .. module_name)
+    local full_module = module_prefix .. "." .. module_name
+    local ok, module = pcall(require, full_module)
     if not ok then
       vim.notify(
-        "Failed to load module kaivim.plugins.lang.lsp." .. module_name .. ": " .. module,
+        "Failed to load module " .. full_module .. ": " .. module,
         vim.log.levels.ERROR
       )
       goto continue
     end
     if type(module) ~= "table" then
       vim.notify(
-        "Module kaivim.plugins.lang.lsp." .. module_name .. " did not return a table",
+        "Module " .. full_module .. " did not return a table",
         vim.log.levels.ERROR
       )
       goto continue
@@ -48,7 +54,24 @@ function M.get_lsp_specs()
     table.insert(specs, module)
     ::continue::
   end
+end
 
+--- Gets all language specific specs from the distribution's lang/lsp directory
+--- and the user's config lang/lsp directory.
+--- @return LspSpec[]
+function M.get_lsp_specs()
+  local specs = {}
+  scan_lsp_dir(
+    my_root .. "/kaivim/plugins/lang/lsp",
+    "kaivim.plugins.lang.lsp",
+    specs,
+    { lsp = true }
+  )
+  scan_lsp_dir(
+    vim.fn.stdpath("config") .. "/lua/lang/lsp",
+    "lang.lsp",
+    specs
+  )
   return specs
 end
 

@@ -165,8 +165,24 @@ return {
 
 Language specs in `lua/kaivim/plugins/lang/lsp/` are automatically discovered at
 startup. Each file returns an `LspSpec` table that can include LSP server config,
-linters, formatters, and additional plugin specs. To add support for a new
-language, create a new file in that directory following the existing pattern.
+linters, formatters, and additional plugin specs.
+
+Users can add their own language specs by creating files under
+`lua/lang/lsp/` in their config directory (e.g., `~/.config/nvim/lua/lang/lsp/`).
+These follow the same `LspSpec` format and are discovered alongside the
+distribution's built-in specs:
+
+```lua
+-- lua/lang/lsp/python.lua
+--- @type LspSpec
+return {
+  ft = { "python" },
+  lsp = {
+    pyright = {},
+  },
+  formatter = { "black" },
+}
+```
 
 ## License
 
