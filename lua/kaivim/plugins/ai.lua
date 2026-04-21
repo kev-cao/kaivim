@@ -8,22 +8,15 @@ return {
     "zbirenbaum/copilot.lua",
     event = { "InsertEnter" },
     keys = keymaps.copilot.keys,
-    opts = function()
-      local kaivim = require("kaivim")
-      return {
-        copilot_node_command = kaivim.config.node_path,
-        panel = {
-          enabled = false,
-        },
-        suggestion = {
-          enabled = true,
-          auto_trigger = true,
-        },
-      }
-    end,
-    config = function(_, opts)
-      require("copilot").setup(opts)
-    end,
+    opts = {
+      panel = {
+        enabled = false,
+      },
+      suggestion = {
+        enabled = true,
+        auto_trigger = true,
+      },
+    },
   },
   {
     "greggh/claude-code.nvim",

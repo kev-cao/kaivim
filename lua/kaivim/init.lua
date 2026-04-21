@@ -4,12 +4,10 @@
 local M = {}
 
 --- @class KaiVimConfig
---- @field node_path? string Path to the Node.js binary (default: "node")
 --- @field ai_assistant? "claude"|"opencode" Which AI assistant to enable (default: nil, both disabled)
 
 --- @type KaiVimConfig
 M.config = {
-  node_path = "node",
   ai_assistant = nil,
 }
 

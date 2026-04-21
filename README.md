@@ -63,7 +63,6 @@ options to configure the distribution:
 
 ```lua
 require("kaivim").setup({
-  node_path = "/opt/homebrew/bin/node",
   ai_assistant = "claude",
 })
 ```
@@ -77,7 +76,6 @@ Pass options via the `opts` field on the KaiVim plugin spec in `init.lua`:
   "kev-cao/kaivim",
   import = "kaivim.plugins",
   opts = {
-    node_path = "/opt/homebrew/bin/node",
     ai_assistant = "claude",
   },
 },
@@ -85,7 +83,6 @@ Pass options via the `opts` field on the KaiVim plugin spec in `init.lua`:
 
 | Option | Type | Default | Description |
 |---|---|---|---|
-| `node_path` | `string` | `"node"` | Path to the Node.js binary, used by Copilot |
 | `ai_assistant` | `"claude"\|"opencode"\|nil` | `nil` | Which AI assistant plugin to enable |
 
 ### Leader Keys
