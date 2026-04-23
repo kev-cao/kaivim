@@ -11,15 +11,6 @@ return {
       local keymaps = require("kaivim.config.keymaps")
       return keymaps.obsidian.keys
     end,
-    event = function()
-      local vault = vim.fn.expand("~/Documents/obsidian")
-      return {
-        "BufReadPre " .. vault .. "/*.md",
-        "BufReadPre " .. vault .. "/**/*.md",
-        "BufNewFile " .. vault .. "/*.md",
-        "BufNewFile " .. vault .. "/**/*.md",
-      }
-    end,
     opts = function()
       local vault = vim.fn.expand("~/Documents/obsidian")
       local function note_id()
@@ -79,7 +70,8 @@ return {
   {
     "kev-cao/kai-obsidian.nvim",
     enabled = function()
-      return require("lazy.core.config").spec.plugins["obsidian.nvim"] ~= nil
+      local spec = require("lazy.core.config").spec
+      return spec.plugins["obsidian.nvim"] ~= nil and not spec.disabled["obsidian.nvim"]
     end,
     dependencies = {
       "obsidian-nvim/obsidian.nvim",
