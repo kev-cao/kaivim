@@ -78,6 +78,9 @@ return {
   },
   {
     "kev-cao/kai-obsidian.nvim",
+    enabled = function()
+      return require("lazy.core.config").spec.plugins["obsidian.nvim"] ~= nil
+    end,
     dependencies = {
       "obsidian-nvim/obsidian.nvim",
       "nvim-lua/plenary.nvim",
