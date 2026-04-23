@@ -21,10 +21,16 @@ M.obsidian = {
       desc = "Insert a template into current note",
     },
     {
-      "<localleader>l",
+      "<localleader>lf",
       "<cmd>Obsidian links<CR>",
       mode = "n",
-      desc = "List links in current note",
+      desc = "List forward links in current note",
+    },
+    {
+      "<localleader>lb",
+      "<cmd>Obsidian backlinks<CR>",
+      mode = "n",
+      desc = "List backlinks to current note",
     },
     {
       "<localleader>rr",
@@ -50,6 +56,9 @@ M.obsidian = {
       mode = "n",
       desc = "Show backlinks to current note",
     },
+  },
+  bufgroups = {
+    { "<localleader>l", group = "Obsidian links", icon = { icon = "", color = "green" } },
   },
   keys = {
     {

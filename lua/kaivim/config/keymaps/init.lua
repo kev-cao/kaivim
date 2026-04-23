@@ -9,8 +9,14 @@ local ai = require("kaivim.config.keymaps.ai")
 local dev = require("kaivim.config.keymaps.dev")
 local notes = require("kaivim.config.keymaps.notes")
 local lsp = require("kaivim.config.keymaps.lsp")
+--- @class KeyMap
+--- @field keys LazyKeysSpec[]
+--- @field bufkeys? LazyKeysSpec[]
+--- @field bufgroups? wk.Spec[]
 
---- @type table<string, { keys?: LazyKeysSpec[], bufkeys?: LazyKeysSpec[] }>
+--- @alias PluginKeyMaps table<string, KeyMap>
+
+--- @type table<string, { keys?: LazyKeysSpec[], bufkeys?: LazyKeysSpec[], bufgroups?: wk.Mapping[] }>
 local M = {}
 
 M.groups = {

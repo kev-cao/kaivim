@@ -53,17 +53,27 @@ function M.get_ui_dimensions()
   return height, width
 end
 
---- Creates a new which-key spec with the buffer option set to true.
---- @param specs {[number]: wk.Spec}: A list of which-key specs.
---- @return {[number]: wk.Spec}: A new list of which-key specs with the buffer option set to true.
-function M.make_buflocal(specs)
-  local ret = {}
-  for _, spec in ipairs(specs) do
-    spec = vim.deepcopy(spec)
-    spec.buffer = true
-    table.insert(ret, spec)
+--- Registers buffer-local keymaps and optionally which-key groups.
+--- @param bufnr number Buffer number to apply keymaps to.
+--- @param keys LazyKeysSpec[] Array of keymap specs.
+--- @param groups? wk.Spec[] Optional which-key group specs (only applied if which-key is available).
+function M.apply_bufkeys(bufnr, keys, groups)
+  local wk_ok, wk = pcall(require, "which-key")
+  if wk_ok and groups then
+    for _, group in ipairs(groups) do
+      wk.add({ vim.tbl_extend("force", group, { buffer = bufnr }) })
+    end
   end
-  return ret
+  for _, map in ipairs(keys) do
+    if wk_ok then
+      wk.add({ vim.tbl_extend("force", map, { buffer = bufnr }) })
+    else
+      vim.keymap.set(map.mode, map[1], map[2], {
+        buffer = bufnr,
+        desc = map.desc,
+      })
+    end
+  end
 end
 
 --- Checks if the current working directory is inside a git repository.

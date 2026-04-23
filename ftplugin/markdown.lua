@@ -12,19 +12,9 @@ local ok, obsidian = pcall(function() return Obsidian end)
 if ok and obsidian and obsidian.dir then
   local vault = tostring(obsidian.dir)
   if curr_file:find(vault, 1, true) == 1 then
-    local bufnr = vim.api.nvim_get_current_buf()
+    local func = require("kaivim.util.func")
     local keymaps = require("kaivim.config.keymaps")
-    local wk_ok, wk = pcall(require, "which-key")
-    for _, map in ipairs(keymaps.obsidian.bufkeys) do
-      if wk_ok then
-        wk.add({ vim.tbl_extend("force", map, { buffer = bufnr }) })
-      else
-        vim.keymap.set(map.mode, map[1], map[2], {
-          buffer = bufnr,
-          desc = map.desc,
-        })
-      end
-    end
+    func.apply_bufkeys(vim.api.nvim_get_current_buf(), keymaps.obsidian.bufkeys, keymaps.obsidian.bufgroups)
   end
 end
 

@@ -44,7 +44,7 @@ vim.api.nvim_create_autocmd({ "BufWinEnter", "WinNew" }, {
     -- first.
     vim.schedule(function()
       if vim.wo.diff then
-        for _, map in ipairs(keymaps.fugitive.buflocal) do
+        for _, map in ipairs(keymaps.fugitive.bufkeys) do
           vim.keymap.set(map.mode, map[1], map[2], {
             buffer = args.buf,
             desc = map.desc,
@@ -72,7 +72,7 @@ vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter" }, {
           return
         end
 
-        for _, map in ipairs(keymaps.fugitive.mainbuflocal) do
+        for _, map in ipairs(keymaps.fugitive.mainbufkeys) do
           vim.keymap.set(map.mode, map[1], map[2], {
             buffer = args.buf,
             desc = map.desc,

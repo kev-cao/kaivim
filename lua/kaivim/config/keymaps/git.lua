@@ -1,5 +1,6 @@
 local keymaps = require("kaivim.util.keymaps")
 
+--- @type PluginKeyMaps
 local M = {}
 
 M.fugitive = {
@@ -20,7 +21,7 @@ M.fugitive = {
       desc = "Open git mergetool",
     },
   },
-  buflocal = {
+  bufkeys = {
     {
       "<localleader><S-w>",
       keymaps.git.mergetool.write,
@@ -52,7 +53,7 @@ M.fugitive = {
       desc = "Previous conflicting file",
     },
   },
-  mainbuflocal = {
+  mainbufkeys = {
     {
       "<localleader>h",
       "<cmd>diffget //2<CR>",
