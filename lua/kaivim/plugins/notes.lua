@@ -15,7 +15,9 @@ return {
       local vault = vim.fn.expand("~/Documents/obsidian")
       return {
         "BufReadPre " .. vault .. "/*.md",
+        "BufReadPre " .. vault .. "/**/*.md",
         "BufNewFile " .. vault .. "/*.md",
+        "BufNewFile " .. vault .. "/**/*.md",
       }
     end,
     opts = function()
