@@ -31,6 +31,7 @@ vim.opt.splitright = true
 vim.opt.ssop:append({ "curdir" })
 vim.opt.ssop:remove("blank")
 vim.opt.conceallevel = 2
+vim.opt.autoread = true
 
 vim.g.tex_flavor = "latex"
 vim.g.vimtex_view_method = "zathura"
