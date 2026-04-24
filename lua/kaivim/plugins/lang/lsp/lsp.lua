@@ -37,98 +37,90 @@ return {
       local capabilities = vim.tbl_deep_extend(
         "force",
         {},
-        require("cmp_nvim_lsp").default_capabilities(),
         vim.lsp.protocol.make_client_capabilities(),
+        require("cmp_nvim_lsp").default_capabilities(),
         opts.capabilities or {}
       )
-      local function on_attach(client, bufnr)
-        if client == nil then
-          return
-        end
 
-        if client.server_capabilities.documentHighlightProvider then
-          vim.api.nvim_create_augroup("lsp_hover", { clear = false })
-          vim.api.nvim_clear_autocmds({ buffer = bufnr, group = "lsp_hover" })
-          vim.api.nvim_create_autocmd("CursorHold", {
-            buffer = bufnr,
-            group = "lsp_hover",
-            callback = vim.lsp.buf.document_highlight,
-          })
-          vim.api.nvim_create_autocmd("CursorHoldI", {
-            buffer = bufnr,
-            group = "lsp_hover",
-            callback = vim.lsp.buf.document_highlight,
-          })
-          vim.api.nvim_create_autocmd("CursorMoved", {
-            buffer = bufnr,
-            group = "lsp_hover",
-            callback = vim.lsp.buf.clear_references,
-          })
-        end
-      end
+      vim.lsp.config("*", { capabilities = capabilities })
 
-      vim.lsp.config("*", {
-        capabilities = capabilities,
-        on_attach = on_attach,
-      })
-
+      -- Collect per-server on_attach hooks, then strip them from the config
+      -- since vim.lsp.config does not support on_attach directly.
+      local server_on_attaches = {}
       for server_name, server in pairs(opts.servers) do
-        local server_on_attach = function(client, bufnr)
-          if server.on_attach then
-            if not server.on_attach(client, bufnr) then
-              return
-            end
-          end
-          on_attach(client, bufnr)
+        if server.on_attach then
+          server_on_attaches[server_name] = server.on_attach
+          server = vim.deepcopy(server)
+          server.on_attach = nil
         end
-        local server_opts = vim.tbl_deep_extend("force", {
-          capabilities = capabilities,
-          handlers = {
-            ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-              border = "rounded",
-            }),
-          },
-        }, server, { on_attach = server_on_attach })
-        vim.lsp.config(server_name, server_opts)
+        vim.lsp.config(server_name, server)
       end
-      require("mason").setup({
-        ui = {
-          icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗",
-          },
-        },
-      })
-      require("mason-lspconfig").setup({
-        ensure_installed = {},
-        automatic_enable = true,
+
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("kaivim_lsp_attach", { clear = true }),
+        callback = function(ev)
+          local client = vim.lsp.get_client_by_id(ev.data.client_id)
+          if not client then return end
+
+          -- Run per-server on_attach if defined
+          local on_attach = server_on_attaches[client.name]
+          if on_attach then
+            on_attach(client, ev.buf)
+          end
+
+          -- Highlight references under cursor
+          if client.server_capabilities.documentHighlightProvider then
+            local group = vim.api.nvim_create_augroup("kaivim_lsp_highlight_" .. ev.buf, { clear = true })
+            vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+              buffer = ev.buf,
+              group = group,
+              callback = vim.lsp.buf.document_highlight,
+            })
+            vim.api.nvim_create_autocmd("CursorMoved", {
+              buffer = ev.buf,
+              group = group,
+              callback = vim.lsp.buf.clear_references,
+            })
+          end
+        end,
       })
     end,
     keys = keymaps.lsp.keys,
   },
   {
+    "mason-org/mason.nvim",
+    opts = {
+      ui = {
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗",
+        },
+      },
+    },
+  },
+  {
     "mason-org/mason-lspconfig.nvim",
-    lazy = false,
     dependencies = {
       "mason-org/mason.nvim",
       "neovim/nvim-lspconfig",
     },
+    opts = {
+      automatic_enable = true,
+    },
   },
   {
     "folke/lazydev.nvim",
-    ft = "lua", -- only load on lua files
+    ft = "lua",
     opts = {
       library = {
-        -- See the configuration section for more details
-        -- Load luvit types when the `vim.uv` word is found
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
       },
     },
   },
   {
     "zeioth/garbage-day.nvim",
-    depedencies = "neovim/nvim-lspconfig",
+    dependencies = "neovim/nvim-lspconfig",
     event = "VeryLazy",
   },
 }

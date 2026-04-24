@@ -5,7 +5,7 @@
 --- @type LspSpec
 return {
   lsp = {
-    tsserver = nil,
+    ts_ls = nil,
   },
   ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
   formatter = { "prettier" },

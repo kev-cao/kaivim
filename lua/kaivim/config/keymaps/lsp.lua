@@ -34,13 +34,13 @@ M.lsp = {
     },
     {
       "<M-k>",
-      "<cmd>lua vim.lsp.buf.hover()<CR>",
+      function() vim.lsp.buf.hover({ border = "rounded" }) end,
       mode = "n",
       desc = "Show documentation",
     },
     {
       "<M-k>",
-      "<cmd>lua vim.lsp.buf.signature_help()<CR>",
+      function() vim.lsp.buf.signature_help({ border = "rounded" }) end,
       mode = "i",
       desc = "Show signature",
     },
