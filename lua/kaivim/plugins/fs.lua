@@ -40,14 +40,17 @@ return {
   },
   {
     'stevearc/oil.nvim',
+    lazy = false,
     ---@module 'oil'
     ---@type oil.SetupOpts
     opts = {
+      default_file_explorer = false,
       use_default_keymaps = false,
       skip_confirm_for_simple_edits = true,
       win_options = {
         winbar = "%!v:lua.require('kaivim.util.oil').get_oil_winbar()",
-      }
+      },
+      extra_scp_args = { "-O" }, -- Forces legacy protocol
     },
     keys = keymaps.oil.keys,
     dependencies = { "nvim-tree/nvim-web-devicons" },
