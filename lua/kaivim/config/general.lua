@@ -6,6 +6,7 @@ vim.g.rust_recommended_style = 0
 --- https://github.com/neovim/neovim/issues/22696
 vim.opt.diffopt:remove("linematch:40")
 
+vim.opt.backupcopy = "yes"
 vim.opt.colorcolumn = { "80", "100" }
 vim.opt.hlsearch = true
 vim.opt.relativenumber = true
