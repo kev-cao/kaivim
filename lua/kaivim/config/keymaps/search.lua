@@ -51,6 +51,12 @@ M.fzf = {
       desc = "Search quickfix list",
     },
     {
+      "<leader>sj",
+      "<cmd>FzfLua jumps<CR>",
+      mode = "n",
+      desc = "Search jumplist",
+    },
+    {
       "<leader>gc",
       -- Prevent FzF from sorting the output so that local branches
       -- are listed first.
