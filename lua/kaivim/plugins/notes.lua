@@ -6,10 +6,25 @@ return {
     "obsidian-nvim/obsidian.nvim",
     version = "*",
     dependencies = { "nvim-lua/plenary.nvim" },
-    lazy = true,
     keys = function()
       local keymaps = require("kaivim.config.keymaps")
       return keymaps.obsidian.keys
+    end,
+    config = function(_, opts)
+      require("obsidian").setup(opts)
+
+      -- Apply buffer-local keymaps to already-open vault files (session restore).
+      -- ftplugin/markdown.lua handles this normally, but on session restore
+      -- Obsidian isn't loaded yet when ftplugin fires.
+      local vault = tostring(Obsidian.dir)
+      local func = require("kaivim.util.func")
+      local keymaps = require("kaivim.config.keymaps")
+      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        local name = vim.api.nvim_buf_get_name(buf)
+        if vim.api.nvim_buf_is_loaded(buf) and name:find(vault, 1, true) == 1 and name:match("%.md$") then
+          func.apply_bufkeys(buf, keymaps.obsidian.bufkeys, keymaps.obsidian.bufgroups)
+        end
+      end
     end,
     opts = function()
       local vault = vim.fn.expand("~/Documents/obsidian")

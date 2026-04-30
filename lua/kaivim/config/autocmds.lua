@@ -3,6 +3,16 @@
 
 local keymaps = require("kaivim.config.keymaps")
 
+-- Re-trigger BufEnter for session-restored buffers so that plugin features
+-- like obsidian.nvim conceal extmarks are applied after plugins load.
+vim.api.nvim_create_autocmd("User", {
+  pattern = "VeryLazy",
+  once = true,
+  callback = function()
+    vim.cmd("doautocmd BufEnter")
+  end,
+})
+
 vim.api.nvim_create_augroup("lang", { clear = true })
 
 vim.api.nvim_create_autocmd("BufWritePost", {
