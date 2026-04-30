@@ -241,7 +241,8 @@ return {
       },
       tint = {
         bg = { rgb = { 49, 53, 61 }, intensity = 0.2 }
-      }
+      },
+      usecursorhold = true,
     },
   }
 }
