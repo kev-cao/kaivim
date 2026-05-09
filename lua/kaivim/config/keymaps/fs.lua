@@ -65,7 +65,7 @@ M.oil = {
       desc = "Open file or directory"
     },
     {
-      "<C-v>",
+      "<C-|>",
       function()
         local oil = require("oil")
         oil.select({vertical = true })
