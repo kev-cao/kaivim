@@ -90,6 +90,9 @@ return {
           },
         },
         completion = { min_chars = 0 },
+        checkbox = {
+          order = { " ", "x", "!", ">", "~" },
+        },
       }
     end,
   },
