@@ -27,7 +27,7 @@ M.lsp = {
       desc = "Go to type definition",
     },
     {
-      "<leader>rr",
+      "<localleader>r",
       "<cmd>lua vim.lsp.buf.rename()<CR>",
       mode = "n",
       desc = "Rename reference",
