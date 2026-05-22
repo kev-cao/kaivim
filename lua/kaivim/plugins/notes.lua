@@ -54,7 +54,7 @@ return {
         attachments = { folder = "attachments" },
         note_id_func = nil,
         frontmatter = {
-          enabled = function(path) return not string.match(path, "%.claude/") end,
+          enabled = function(path) return not string.match(path, "%claude/") end,
           func = function(note)
             local out = {
               uid = note_id(),
