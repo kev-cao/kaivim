@@ -93,6 +93,9 @@ return {
         checkbox = {
           order = { " ", "x", "!", ">", "~" },
         },
+        ui = {
+          enable = false, -- Disabling in favor of render-markdown
+        },
       }
     end,
   },
