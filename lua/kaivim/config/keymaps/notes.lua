@@ -73,6 +73,30 @@ M.obsidian = {
       mode = "n",
       desc = "Search in Obsidian notes",
     },
+    {
+      "<leader>odd",
+      "<cmd>Obsidian today<CR>",
+      mode = "n",
+      desc = "Open today's daily note",
+    },
+    {
+      "<leader>odl",
+      "<cmd>Obsidian dailies<CR>",
+      mode = "n",
+      desc = "List daily notes",
+    },
+    {
+      "<leader>ody",
+      "<cmd>Obsidian yesterday<CR>",
+      mode = "n",
+      desc = "Open yesterday's daily note",
+    },
+    {
+      "<leader>odt",
+      "<cmd>Obsidian tomorrow<CR>",
+      mode = "n",
+      desc = "Open tomorrow's daily note",
+    },
   },
 }
 return M
