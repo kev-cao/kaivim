@@ -33,6 +33,9 @@ return {
       cmd = { "gopls" },
       filetypes = { "go", "gomod", "gowork", "gotmpl" },
       single_file_support = true,
+      capabilities = {
+        offsetEncoding = "utf-16",
+      },
       settings = {
         gopls = {
           buildFlags = { "-mod=mod" },
