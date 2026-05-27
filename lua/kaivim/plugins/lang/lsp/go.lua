@@ -12,6 +12,9 @@ return {
       capabilities = {
         offsetEncoding = "utf-16",
       },
+      init_options = {
+        semanticTokens = true,
+      },
       settings = {
         gopls = {
           buildFlags = { "-mod=mod" },
