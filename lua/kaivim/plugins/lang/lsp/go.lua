@@ -6,30 +6,6 @@
 return {
   lsp = {
     gopls = {
-      on_attach = function(client, bufnr)
-        if not client then
-          return
-        end
-
-        local uri = vim.uri_from_bufnr(bufnr)
-        local invalid_schemes = { "octo://", "fugitive://" }
-        for _, scheme in ipairs(invalid_schemes) do
-          if vim.startswith(uri, scheme) then
-            return
-          end
-        end
-        if not client.server_capabilities.semanticTokensProvider then
-          local semantic = client.config.capabilities.textDocument.semanticTokens
-          if not semantic then
-            return
-          end
-          client.server_capabilities.semanticTokensProvider = {
-            full = true,
-            legend = { tokenModifiers = semantic.tokenModifiers, tokenTypes = semantic.tokenTypes },
-            range = true,
-          }
-        end
-      end,
       cmd = { "gopls" },
       filetypes = { "go", "gomod", "gowork", "gotmpl" },
       single_file_support = true,

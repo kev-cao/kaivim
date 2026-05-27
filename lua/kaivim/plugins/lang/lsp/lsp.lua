@@ -27,7 +27,7 @@ return {
       for _, spec in pairs(lsp_specs) do
         for lsp, lsp_opts in pairs(spec.lsp or {}) do
           if lsp_opts ~= nil then
-            opts.servers[lsp] = lsp_opts
+            opts.servers[lsp] = vim.tbl_deep_extend("force", opts.servers[lsp] or {}, lsp_opts)
           end
         end
       end
