@@ -24,7 +24,7 @@ return {
       },
       settings = {
         gopls = {
-          buildFlags = { "-mod=mod" },
+          buildFlags = { "-mod=readonly" },
           directoryFilters = {
             "-**/node_modules",
             "-**/_bazel",
