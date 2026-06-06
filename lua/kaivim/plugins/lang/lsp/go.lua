@@ -6,7 +6,14 @@
 return {
   lsp = {
     gopls = {
-      cmd = { "gopls" },
+      cmd = {
+        "gopls",
+        "-remote=auto",
+        "-remote.listen.timeout=30m",
+        "-remote.logfile=auto",
+        "-logfile=auto",
+        "-remote.debug=:0",
+      },
       filetypes = { "go", "gomod", "gowork", "gotmpl" },
       single_file_support = true,
       capabilities = {

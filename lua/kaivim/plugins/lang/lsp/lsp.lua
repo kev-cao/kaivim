@@ -54,6 +54,7 @@ return {
           server.on_attach = nil
         end
         vim.lsp.config(server_name, server)
+        vim.lsp.enable(server_name)
       end
 
       vim.api.nvim_create_autocmd("LspAttach", {
@@ -90,6 +91,7 @@ return {
   {
     "mason-org/mason.nvim",
     opts = {
+      PATH = "append",
       ui = {
         icons = {
           package_installed = "✓",
