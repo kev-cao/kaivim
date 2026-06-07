@@ -58,13 +58,13 @@ M.lsp = {
     },
     {
       "<localleader>j",
-      "<cmd>lua vim.diagnostic.goto_next()<CR>",
+      "<cmd>lua vim.diagnostic.jump({ count = 1, float = true})<CR>",
       mode = "n",
       desc = "Next diagnostic",
     },
     {
       "<localleader>k",
-      "<cmd>lua vim.diagnostic.goto_prev()<CR>",
+      "<cmd>lua vim.diagnostic.jump({ count = -1, float = true })<CR>",
       mode = "n",
       desc = "Previous diagnostic",
     },
