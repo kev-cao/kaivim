@@ -71,7 +71,12 @@ M.opencode = {
     {
       "<leader>cc",
       function()
-        require("opencode").toggle()
+        require("snacks.terminal").toggle("opencode --port", {
+          win = {
+            style = "terminal",
+            position = "right",
+          },
+        })
       end,
       mode = "n",
       desc = "Toggle OpenCode",
