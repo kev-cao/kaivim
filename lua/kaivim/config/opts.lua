@@ -7,39 +7,39 @@ local M = {}
 M.marks = {
   opts = {
     bookmark_1 = {
-      sign = "",
+      sign = "",
       virt_text = "Problem Area",
     },
     bookmark_2 = {
-      sign = "",
+      sign = "",
       virt_text = "Needs Clarification",
     },
     bookmark_3 = {
-      sign = "",
+      sign = "󰓎",
       virt_text = "Important",
     },
     bookmark_4 = {
-      sign = "",
+      sign = "󰈙",
       virt_text = "Documentation",
     },
     bookmark_5 = {
-      sign = "",
+      sign = "",
       virt_text = "Needs Editing",
     },
     bookmark_6 = {
-      sign = "",
+      sign = "󰄛",
     },
     bookmark_7 = {
-      sign = "",
+      sign = "",
     },
     bookmark_8 = {
-      sign = "",
+      sign = "󰄀",
     },
     bookmark_9 = {
-      sign = "",
+      sign = "󰣇",
     },
     bookmark_0 = {
-      sign = "",
+      sign = "",
     },
   },
 }
