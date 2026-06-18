@@ -40,15 +40,15 @@ M.fzf = {
     },
     {
       "<leader>sq",
-      "<cmd>FzfLua loclist<CR>",
-      mode = "n",
-      desc = "Search location list",
-    },
-    {
-      "<leader>s<S-q>",
       "<cmd>FzfLua quickfix<CR>",
       mode = "n",
       desc = "Search quickfix list",
+    },
+    {
+      "<leader>s<S-q>",
+      "<cmd>FzfLua loclist<CR>",
+      mode = "n",
+      desc = "Search location list",
     },
     {
       "<leader>sj",
@@ -68,6 +68,9 @@ M.fzf = {
   fzfkeys = {
     ["tab"] = "down",
     ["shift-tab"] = "up",
+    ["ctrl-o"] = "toggle-all",
+    ["ctrl-d"] = "toggle+down",
+    ["ctrl-u"] = "up+toggle",
   },
 }
 

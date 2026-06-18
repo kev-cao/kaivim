@@ -9,6 +9,9 @@ return {
     opts = function()
       local fzf = require("fzf-lua")
       return {
+        defaults = {
+          copen = false,
+        },
         keymap = {
           fzf = keymaps.fzf.fzfkeys,
         },
