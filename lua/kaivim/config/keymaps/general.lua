@@ -102,6 +102,18 @@ M.general = {
       hidden = true,
       noremap = true,
     },
+    {
+      "<leader>qn",
+      "<cmd>cnext<CR>",
+      mode = { "n" },
+      desc = "Next quickfix item",
+    },
+    {
+      "<leader>qp",
+      "<cmd>cprev<CR>",
+      mode = { "n" },
+      desc = "Previous quickfix item",
+    },
   },
 }
 
