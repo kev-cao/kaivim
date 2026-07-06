@@ -71,6 +71,7 @@ M.fzf = {
     ["ctrl-o"] = "toggle-all",
     ["ctrl-d"] = "toggle+down",
     ["ctrl-u"] = "up+toggle",
+    ["ctrl-q"] = "accept",
   },
 }
 
