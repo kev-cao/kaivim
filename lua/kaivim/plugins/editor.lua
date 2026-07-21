@@ -228,4 +228,14 @@ return {
       vim.g.bullets_outline_levels = { "num", "num" }
     end,
   },
+  {
+    "pteroctopus/faster.nvim",
+    opts = {
+      behaviours = {
+        bigfile = {
+          filesize = 3, -- MB
+        }
+      },
+    },
+  },
 }
