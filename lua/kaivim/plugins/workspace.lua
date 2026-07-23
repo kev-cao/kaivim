@@ -57,15 +57,8 @@ return {
             goto continue
           end
 
-          -- Also delete ClaudeCode/OpenCode buffers since they should not saved.
-          local is_terminal = vim.bo[bufnr].buftype == "terminal"
-          if not is_terminal then
-            goto continue
-          end
-
-          local name = vim.api.nvim_buf_get_name(bufnr)
-          local filetype = vim.bo[bufnr].filetype
-          if name:match("claude%-code%-") or filetype == "opencode_terminal" then
+          -- We'll also ignore terminal windows.
+          if vim.bo[bufnr].buftype == "terminal" then
             pcall(vim.api.nvim_buf_delete, bufnr, { force = true })
           end
 
