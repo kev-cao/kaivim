@@ -15,6 +15,17 @@ vim.api.nvim_create_autocmd("User", {
 
 vim.api.nvim_create_augroup("lang", { clear = true })
 
+vim.api.nvim_create_autocmd("BufReadPost", {
+  group = "lang",
+  pattern = "*",
+  callback = function()
+    local ok, lint = pcall(require, "lint")
+    if ok then
+      lint.try_lint()
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd("BufWritePost", {
   group = "lang",
   pattern = "*",
