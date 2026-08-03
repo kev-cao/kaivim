@@ -63,7 +63,7 @@ return {
   },
   ft = {"go"},
   linter = {
-    golangcilint = nil
+    golangcilint = {},
   },
   formatter = function()
     local gofmt = "gofmt"

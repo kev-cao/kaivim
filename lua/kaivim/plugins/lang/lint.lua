@@ -40,7 +40,7 @@ return {
               lint.linters[linter] = function()
                 return lint_cfg(default_cfg)
               end
-            elseif type(lint_cfg) == "table" then
+            elseif type(lint_cfg) == "table" and #lint_cfg > 0 then
               for key, value in pairs(lint_cfg) do
                 lint.linters[linter][key] = value
               end

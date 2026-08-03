@@ -8,7 +8,7 @@ return {
   ft = { "rust" },
   formatter = { "rustfmt" },
   linter = {
-    clippy = nil
+    clippy = {},
   },
   {
     'mrcjkb/rustaceanvim',
