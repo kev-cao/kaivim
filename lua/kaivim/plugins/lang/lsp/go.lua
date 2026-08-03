@@ -70,7 +70,10 @@ return {
     if vim.fn.executable("crlfmt") == 1 then
       gofmt = "crlfmt"
     end
-    return { "goimports", gofmt }
+    return {
+      goimports = {},
+      [gofmt] = {},
+    }
   end,
   {
     "charlespascoe/vim-go-syntax",

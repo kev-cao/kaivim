@@ -23,26 +23,29 @@ return {
             inherit = false,
           },
         },
-        format_after_save = {
-          async = true,
-          lsp_format = "fallback",
-        }
+        log_level = vim.log.levels.INFO,
       }
       local lsp_specs = require("kaivim.util.plugins").get_lsp_specs()
       for _, spec in ipairs(lsp_specs) do
-        if spec.formatter ~= nil then
+        local fmtrs = spec.formatter
+        if fmtrs ~= nil then
+          if type(spec.formatter) == "function" then
+            fmtrs = spec.formatter()
+          end
+
+          local fmtr_names = {}
+          for ft, _ in pairs(fmtrs) do
+            table.insert(fmtr_names, ft)
+          end
+
           for _, ft in ipairs(spec.ft or {}) do
-            opts.formatters_by_ft[ft] = spec.formatter
+            opts.formatters_by_ft[ft] = fmtr_names
           end
 
           --- @type string[]
-          local formatters = spec.formatter
-          if type(spec.formatter) == "function" then
-            formatters = spec.formatter(0)
-          end
-          for _, formatter in ipairs(formatters or {}) do
+          for formatter, cfg in pairs(fmtrs) do
             if opts.formatters[formatter] == nil then
-              opts.formatters[formatter] = {}
+              opts.formatters[formatter] = cfg
             end
           end
         end

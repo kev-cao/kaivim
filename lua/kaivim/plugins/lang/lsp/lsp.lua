@@ -1,10 +1,13 @@
 local keymaps = require("kaivim.config.keymaps")
 
+--- @module "conform"
+--- @module "lint"
+
 --- @class LspSpec
 --- @field ft string[] Filetypes that linters and formatters will apply to (output of vim.bo.filetype)
 --- @field lsp? table<string, vim.lsp.Config|nil> Mapping of LSPs to their options, or nil for defaults.
 --- @field linter? table<string, PartialLinter|(fun(lint.Linter): lint.Linter)|nil> Linters to use mapped to their configuration, or empty table for defaults. If a function is provided, the default linter configuration is passed to the function.
---- @field formatter? conform.FiletypeFormatter Formatters to use
+--- @field formatter? table<string, conform.FormatterConfigOverride|fun(bufnr: integer): nil|conform.FormatterConfigOverride> Mapping of formatters to their configs, or empty table for defaults. If a function is provided, the buffer number is passed to the function.
 
 
 --- @class (partial) PartialLinter: lint.Linter
@@ -117,6 +120,8 @@ return {
     opts = {
       library = {
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+        "conform",
+        "lint",
       },
     },
   },

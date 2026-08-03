@@ -8,5 +8,10 @@ return {
   linter = {
     protolint = {}
   },
-  formatter = { "buf" },
+  formatter = {
+    buf = {
+      stdin = true,
+      args = { "format", "--path", "$FILENAME", "--write" },
+    },
+  }
 }

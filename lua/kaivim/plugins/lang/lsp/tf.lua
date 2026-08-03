@@ -5,5 +5,7 @@
 --- @type LspSpec
 return {
   ft = { "tf", "terraform-vars" },
-  formatter = { "tofu_fmt" },
+  formatter = {
+    tofu_fmt = {},
+  },
 }

@@ -6,7 +6,9 @@
 return {
   lsp = nil,
   ft = { "rust" },
-  formatter = { "rustfmt" },
+  formatter = {
+    rustfmt = {},
+  },
   linter = {
     clippy = {},
   },

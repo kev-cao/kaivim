@@ -8,7 +8,9 @@ return {
     ts_ls = nil,
   },
   ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-  formatter = { "prettier" },
+  formatter = {
+    prettier = {},
+  },
   {
     "pmizio/typescript-tools.nvim",
     dependencies = {

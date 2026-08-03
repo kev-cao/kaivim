@@ -18,10 +18,22 @@ vim.api.nvim_create_augroup("lang", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePost", {
   group = "lang",
   pattern = "*",
-  callback = function()
+  callback = function(args)
     local ok, lint = pcall(require, "lint")
     if ok then
       lint.try_lint()
+    end
+
+    local ok, conform = pcall(require, "conform")
+    if ok then
+      conform.format({
+        bufnr = args.buf,
+        async = true,
+      }, function(err)
+        if err == nil then
+          vim.cmd("checktime")
+        end
+      end)
     end
   end,
 })

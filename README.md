@@ -162,7 +162,9 @@ return {
   lsp = {
     pyright = {},
   },
-  formatter = { "black" },
+  formatter = {
+    black = {},
+  },
 }
 ```
 
