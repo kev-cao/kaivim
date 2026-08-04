@@ -57,7 +57,7 @@ local function scan_lsp_dir(dir, module_prefix, specs, skip)
 end
 
 --- Gets all language specific specs from the distribution's lang/lsp directory
---- and the user's config lang/lsp directory.
+--- and the user's config lsp directory.
 --- @return LspSpec[]
 function M.get_lsp_specs()
   local specs = {}
@@ -68,8 +68,8 @@ function M.get_lsp_specs()
     { lsp = true }
   )
   scan_lsp_dir(
-    vim.fn.stdpath("config") .. "/lua/lang/lsp",
-    "lang.lsp",
+    vim.fn.stdpath("config") .. "/lua/lsp",
+    "lsp",
     specs
   )
   return specs
