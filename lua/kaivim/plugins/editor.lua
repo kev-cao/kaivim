@@ -183,13 +183,13 @@ return {
     version = "*",
     opts = {
       mappings = {
-        add = "<S-s>a", -- Add surrounding in Normal and Visual modes
-        delete = "<S-s>d", -- Delete surrounding
-        find = "<S-s>f", -- Find surrounding (to the right)
-        find_left = "<S-s>F", -- Find surrounding (to the left)
-        highlight = "<S-s>h", -- Highlight surrounding
-        replace = "<S-s>r", -- Replace surrounding
-        update_n_lines = "<S-s>n", -- Update `n_lines`
+        add = "gza", -- Add surrounding in Normal and Visual modes
+        delete = "gzd", -- Delete surrounding
+        find = "gzf", -- Find surrounding (to the right)
+        find_left = "gzF", -- Find surrounding (to the left)
+        highlight = "gzh", -- Highlight surrounding
+        replace = "gzr", -- Replace surrounding
+        update_n_lines = "gzn", -- Update `n_lines`
 
         suffix_last = "",
         suffix_next = "",
@@ -238,4 +238,26 @@ return {
       },
     },
   },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    --- @type Flash.Config
+    opts = {
+      modes = {
+        char = {
+          autohide = true,
+          jump_labels = false,
+          highlight = {
+            backdrop = false,
+            matches = false,
+          },
+          multi_line = false,
+        },
+      },
+      highlight = {
+        backdrop = false,
+      },
+    },
+    keys = keymaps.flash.keys,
+  }
 }
